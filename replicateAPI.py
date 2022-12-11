@@ -1,4 +1,5 @@
 import replicate
+import time
 
 
 class Replicate:
@@ -37,8 +38,52 @@ class Replicate:
             "fps": fps,
             "seed": seed
         }
-        output = self.client.predictions.create(version=version, input=input)
-        return output
+        prediction = self.client.predictions.create(version=version, input=input)
+        return prediction
+
+    def callSDOnReplicate(self, prompt="a beautiful portrait of a woman by Artgerm, trending on Artstation",
+    negative_prompt="", width=128, height=128, prompt_strength=float(1), num_outputs=1, num_inference_steps=20,
+    guidance_scale=float(7), scheduler="K_EULER", seed=None):
+        model = self.client.models.get("stability-ai/stable-diffusion")
+        version = model.versions.get("6359a0cab3ca6e4d3320c33d79096161208e9024d174b2311e5a21b6c7e1131c")
+        input = {
+            "prompt": prompt,
+            "negative_prompt": negative_prompt,
+            "width": width,
+            "height": height,
+            "prompt_strength": prompt_strength,
+            "num_outputs": num_outputs,
+            "num_inference_steps": num_inference_steps,
+            "guidance_scale": guidance_scale,
+            "scheduler": scheduler,
+            "seed": seed
+        }
+        prediction = self.client.predictions.create(version=version, input=input)
+        return prediction
+
+def checkPredictionStatus(prediction):
+    prediction.reload()
+    print(prediction.status)
+    if prediction.status == 'succeeded':
+        return prediction.output
+
+def monitorPredictionStatus(prediction):
+    prediction.reload()
+    print(prediction.status)
+    try:
+        while prediction.status == 'processing' or prediction.status == 'starting':
+            prediction.reload()
+            print(prediction.status)
+            print("Waiting")
+            time.sleep(10)
+            continue
+    except KeyboardInterrupt:
+        prediction.cancel()
+        print("Canceled!")
+    if prediction.status == 'succeeded':
+        return prediction.output
+    
 
 if __name__ == "__main__":
-    print(Replicate().callDeforumOnReplicate())
+    prediction = Replicate().callDeforumOnReplicate()
+    monitorPredictionStatus(prediction)

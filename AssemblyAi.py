@@ -17,6 +17,23 @@ def transcribe_url(url, token):
     response = requests.post(endpoint, json=json, headers=headers)
     return response.content.decode('utf-8')
 
+def send_local_file(file, token):
+    filename = "audio.mp3"
+    def read_file(filename, chunk_size=5242880):
+        with open(filename, 'rb') as _file:
+            while True:
+                data = _file.read(chunk_size)
+                if not data:
+                    break
+                yield data
+
+    headers = {'authorization': token}
+    response = requests.post('https://api.assemblyai.com/v2/upload',
+                            headers=headers,
+                            data=read_file(filename))
+
+    return transcribe_url(response.json()['upload_url'], token)
+
 def get_result(id, token):
     endpoint = f'https://api.assemblyai.com/v2/transcript/{id}'
     headers = {
