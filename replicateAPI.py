@@ -4,8 +4,11 @@ import time
 
 class Replicate:
 
-    def __init__(self) -> None:
-        secrets = self.loadSecrets()
+    def __init__(self, replicate_token=None) -> None:
+        if not replicate_token:
+            secrets = self.loadSecrets()
+        else:
+            secrets["REPLICATE_API_TOKEN"] = replicate_token
         self.client = self.initializeReplicateClient(secrets)  
         pass
     
