@@ -31,9 +31,9 @@ def fun_button_click_that_is_really_imoprtant_function_and_does_all_the_work_in_
     yield output
 
     # Generate Video
-    prompt, movement = lyricsToInput().makeOutput(song['sentences'], song['style'].lower(), song['title'])
+    prompt, movement, max_frame = lyricsToInput().makeOutput(song['sentences'], song['style'].lower(), song['title'])
     prediction = Replicate(replicate_key).callDeforumOnReplicate(prompt=prompt, angle=movement['angle'], zoom=movement['zoom'],
-    translation_x=movement['translation_x'], translation_y=movement['translation_y'])
+    translation_x=movement['translation_x'], translation_y=movement['translation_y'], max_frames=max_frame)
     video = monitorPredictionStatus(prediction)
     video_file = requests.get(video)
     open("out_1.mp4", 'wb').write(video_file.content)
