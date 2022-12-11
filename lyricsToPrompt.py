@@ -17,4 +17,4 @@ def lyricFrames(lyric, fps):
 if __name__ == "__main__":
     fps = 15
     for line in lyrics_list:
-        print(lyricFrames(line, fps))
+        print(line["sentence"], lyricFrames(line, fps))
