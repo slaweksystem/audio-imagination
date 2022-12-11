@@ -4,9 +4,9 @@ from fun_button_click import fun_generator
 from fun_button_click import load_video
 
 # Delete dis
-v_token = '29d4559a6dca46e0850c9f1d3b8944f4'
-v_replicate_key = 'abc'
-v_url = 'https://www.youtube.com/watch?v=kNLdd0LUiTI'
+v_token = ''
+v_replicate_key = ''
+v_url = ''
 
 def click(url):
 
