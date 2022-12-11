@@ -31,7 +31,7 @@ def fun_button_click_that_is_really_imoprtant_function_and_does_all_the_work_in_
     yield output
 
     # Generate Video
-    prompt, movement = lyricsToInput().makeOutput(song['sentences'], song['style'], song['title'])
+    prompt, movement = lyricsToInput().makeOutput(song['sentences'], song['style'].lower(), song['title'])
     prediction = Replicate(replicate_key).callDeforumOnReplicate(prompt=prompt, angle=movement['angle'], zoom=movement['zoom'],
     translation_x=movement['translation_x'], translation_y=movement['translation_y'])
     video = monitorPredictionStatus(prediction)
