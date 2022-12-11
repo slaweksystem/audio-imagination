@@ -8,6 +8,7 @@ class Replicate:
         if not replicate_token:
             secrets = self.loadSecrets()
         else:
+            secrets = {}
             secrets["REPLICATE_API_TOKEN"] = replicate_token
         self.client = self.initializeReplicateClient(secrets)  
         pass
@@ -27,11 +28,12 @@ class Replicate:
     def callDeforumOnReplicate(self, max_frames=100, prompt="a beautiful portrait of a woman by Artgerm, trending on Artstation",
     angle="0:(0)", zoom="0: (1.04)", translation_x="0: (0)", translation_y="0: (0)", color_coherence="Match Frame 0 LAB",
     sampler="plms", fps=15, seed=None):
+        print(prompt)
         model = self.client.models.get("deforum/deforum_stable_diffusion")
         version = model.versions.get("e22e77495f2fb83c34d5fae2ad8ab63c0a87b6b573b6208e1535b23b89ea66d6")
         input = {
             "max_frames": max_frames,
-            "prompt": prompt,
+            "animation_prompts": prompt,
             "angle": angle,
             "zoom": zoom,
             "translation_x": translation_x,
@@ -85,8 +87,16 @@ def monitorPredictionStatus(prediction):
         print("Canceled!")
     if prediction.status == 'succeeded':
         return prediction.output
+    elif prediction.status == 'failed':
+        print("Video processing failed")
+        quit(1)
+    else:
+        print("I don't know what happened")
+        quit(2)
+
     
 
 if __name__ == "__main__":
-    prediction = Replicate().callDeforumOnReplicate()
+    prediction = Replicate().callDeforumOnReplicate(prompt="0: 15 second TV commercial (English) | 8: Sunlight travels 93 million mile to turn our grapes into SUNMADE raisins. ultrarelistic, 50mm, realistic, nikon,  | 91: And that's all we put in grapes and sunshine. realistic, award winning photography, nikon, 8k uhd, ",
+    angle="0:(0)", zoom="0: (1.04)", translation_x="0: (0)", translation_y="0: (0)", max_frames=100)
     monitorPredictionStatus(prediction)

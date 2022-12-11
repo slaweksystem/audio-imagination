@@ -40,6 +40,8 @@ with gr.Blocks() as demo:
                     outputs = [txt_box_youtube_download,
                     txt_box_transcription,
                     txt_box_video_generatr])
+    
+    button_give_me_vid.click(load_video, inputs=[], outputs=video)
 
 demo.queue()
 

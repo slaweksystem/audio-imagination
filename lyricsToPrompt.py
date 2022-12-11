@@ -1,4 +1,5 @@
 import random
+import re
 
 class lyricsToInput:
     
@@ -25,7 +26,8 @@ class lyricsToInput:
         
         for line in lyrics:
             prompt += str(line['startFrame']) + ': ' + line['sentence'] + ' | '
-        return prompt
+        prompt += str(lyrics[-1]['endFrame']) + ': ' + title
+        return str(prompt)
 
     def applyStylization(self, lyrics, style):
         stylizations = {
@@ -54,15 +56,17 @@ class lyricsToInput:
 
     def makeMovement(self, lyrics):
         movement = {
-            "angle": "",
-            "zoom": "",
-            "translation_x": "",
-            "translation_y": ""
+            "angle": "0: (0), ",
+            "zoom": "0: (1.04), ",
+            "translation_x": "0: (0), ",
+            "translation_y": "0: (0), "
         }
         for line in lyrics:
             type = random.choice(list(movement))
             randomMovement = str(line["startFrame"]) + ": (" + str(round(random.uniform(-3.0, 3.0), 2)) + "), "
             movement[type] += randomMovement
+        for type in movement:
+            movement[type] = re.sub(", $", "", movement[type])
         return movement
 
 
