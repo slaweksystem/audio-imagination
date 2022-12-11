@@ -2,3 +2,15 @@ json
 requests
 pytube
 moviepy
+certifi==2021.5.30
+charset-normalizer==2.0.4
+distlib==0.3.6
+filelock==3.8.2
+idna==3.2
+packaging==22.0
+platformdirs==2.6.0
+pydantic==1.10.2
+replicate==0.4.0
+requests==2.26.0
+typing-extensions==4.4.0
+urllib3==1.26.6
