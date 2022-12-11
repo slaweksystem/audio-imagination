@@ -19,7 +19,9 @@ with gr.Blocks() as demo:
     url = gr.Textbox(label="Youtube url", value = v_url)
     assemblyAi_token = gr.Textbox(label="Assembly Ai token", value=v_token)
     replicate_key = gr.Textbox(label="Replicate Key", value = v_replicate_key)
+    style = gr.Dropdown(choices = des_gui.styles)
     button_fun = gr.Button("Generate me a Video")
+    
 
     txt_box_youtube_download = gr.Textbox(label = 'Youtube', value = 'Not Started')
     txt_box_transcription = gr.Textbox(label = 'Transcription', value = 'Not Started')
@@ -32,7 +34,8 @@ with gr.Blocks() as demo:
     button_fun.click(fun_generator, inputs = [
                             url,
                             assemblyAi_token,
-                            replicate_key
+                            replicate_key,
+                            style
                             ], 
                     outputs = [txt_box_youtube_download,
                     txt_box_transcription,

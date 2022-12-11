@@ -7,7 +7,13 @@ def transcribe_url(url, token):
 
     json = {
       "audio_url": url,
-      "auto_highlights": True
+      "auto_highlights": True,
+      "iab_categories": True,
+      "sentiment_analysis": True,
+      "summarization": True,
+      "summary_model": "informative",
+      "summary_type": "bullets"
+
     }
 
     headers = {
