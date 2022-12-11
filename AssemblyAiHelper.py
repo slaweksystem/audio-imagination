@@ -27,9 +27,6 @@ def transcription_from_youtube(token, url):
     song['sentences'] = sentences
     return song
 
-
-
-
 def sentence_div(words, words_per_sentence = 5):
     sentences = []
     words_per_sentence = 5

@@ -6,7 +6,8 @@ def transcribe_url(url, token):
     endpoint = "https://api.assemblyai.com/v2/transcript"
 
     json = {
-      "audio_url": url
+      "audio_url": url,
+      "auto_highlights": True
     }
 
     headers = {
@@ -17,8 +18,7 @@ def transcribe_url(url, token):
     response = requests.post(endpoint, json=json, headers=headers)
     return response.content.decode('utf-8')
 
-def send_local_file(file, token):
-    filename = "audio.mp3"
+def send_local_file(filename, token):
     def read_file(filename, chunk_size=5242880):
         with open(filename, 'rb') as _file:
             while True:
