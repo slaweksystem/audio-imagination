@@ -2,12 +2,9 @@ import random
 
 class lyricsToInput:
     
-    def __init__(self, fps=15) -> None:
+    def __init__(self, lyrics, fps=15) -> None:
         self.fps = fps
-        self.lyrics = lyrics_list
-        for lyric in self.lyrics:
-            lyric['start'] = self.milisecondsToSeconds(lyric['start'])
-            lyric['end'] = self.milisecondsToSeconds(lyric['end'])
+        self.lyrics = lyrics
         pass
 
     def defineStartInFrames(self):
