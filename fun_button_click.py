@@ -5,7 +5,8 @@ import moviepy.editor as mp
 def fun_button_click_that_is_really_imoprtant_function_and_does_all_the_work_in_this_project_and_has_a_really_unnecessarily_long_name_to_highlight_its_importance_its_actually_a_generatoor_function_so_you_can_call_it_a_generator_of_fun_because_it_is_a_fun_project(
     url,
     assemblyAi_token,
-    replicate_key
+    replicate_key,
+    style
     ):
     # initial status
     status_overall = 'Downloading Youtube'
@@ -16,6 +17,9 @@ def fun_button_click_that_is_really_imoprtant_function_and_does_all_the_work_in_
 
     # Download Youtube video and transcribing
     song = transcription_from_youtube(assemblyAi_token, url)
+
+    #Adding defined style to song
+    song['style'] = style
 
     status_overall = 'Transcribed, waiting for the Video'
     status_transcription = 'Done'
@@ -29,7 +33,7 @@ def fun_button_click_that_is_really_imoprtant_function_and_does_all_the_work_in_
 
     status_overall = 'Transcribed, waiting for the Video'
     status_transcription = 'Done'
-    status_video = 'Done, You can click the buttn below'
+    status_video = 'Done, You can click the button below'
     output = [status_overall, status_transcription, status_video]
     yield output
 

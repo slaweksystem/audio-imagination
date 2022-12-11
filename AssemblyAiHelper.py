@@ -32,7 +32,6 @@ def sentence_div(words, words_per_sentence = 5):
     words_per_sentence = 5
     i = 0
     
-    
     # bizzare loop to create sentances from words with timestamps
     # the goal was to have at least n words in one statement
     while i < len(words):
