@@ -21,11 +21,11 @@ class lyricsToInput:
         frames = seconds * fps
         return int(frames)
 
-    def makePrompt(self, lyrics):
-        prompt = "0: something | "
+    def makePrompt(self, lyrics, title):
+        prompt = "0: " + title + "| "
         
         for line in lyrics:
-            prompt += str(self.secondsToFrames(line['start'], self.fps)) + ': ' + line['sentence'] + ' | '
+            prompt += str(line['start']) + ': ' + line['sentence'] + ' | '
         return prompt
 
     def applyStylization(self, lyrics, style):
@@ -36,9 +36,14 @@ class lyricsToInput:
             {"art": ["trending on artstation", "fine art", "oil painting", "golden ratio", "elegant", "symmetry", "by Bob Ross", "by Antoine Blanchard", "by Leonid Afremov"]}
         ]
         for line in lyrics:
-            additions = random.sample(stylizations[style], 4)
-            for addition in additions:
-                line['sentence'] += addition + ", "
+            try:    
+                additions = random.sample(stylizations[style], 4)
+                for addition in additions:
+                    line['sentence'] += addition + ", "
+            except KeyError:
+                print("Unknown style, using art")
+                style = "art"
+                pass
         return lyrics
 
     def createPromptKeyframesDict(self, lyrics):
@@ -48,10 +53,10 @@ class lyricsToInput:
                                 "endFrame": self.secondsToFrames(line['end'], self.fps)})
         return lyricsFrames
 
-    def makeOutput(self, lyrics, style):
+    def makeOutput(self, lyrics, style, title):
         lyrics = self.createPromptKeyframesDict(lyrics)
         lyrics = self.applyStylization(lyrics, style)
-        prompt = self.makePrompt(lyrics)
+        prompt = self.makePrompt(lyrics, title)
         return prompt, input
 
 
