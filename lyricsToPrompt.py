@@ -25,10 +25,10 @@ class lyricsToInput:
         prompt = "0: " + title + " | "
         
         for line in lyrics:
-            if line['startFrame'] > 850:
+            if line['startFrame'] > 800:
                 break
             prompt += str(line['startFrame']) + ': ' + line['sentence'] + ' | '
-            if line['endFrame'] < 850:
+            if line['endFrame'] < 800:
                 currentEndFrame = line['endFrame']
         prompt += str(currentEndFrame) + ': ' + title
         return str(prompt)
@@ -72,7 +72,7 @@ class lyricsToInput:
             "translation_y": [-10.0, 10.0]
         }
         for line in lyrics:
-            if line['startFrame'] > 850:
+            if line['startFrame'] > 800:
                 break
             type = random.choice(list(movement))
             randomMovement = str(line["startFrame"]) + ": (" + str(round(random.uniform(parameters[type][0], parameters[type][1]), 2)) + "), "
