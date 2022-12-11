@@ -6,9 +6,6 @@ from fun_button_click import fun
 token = '29d4559a6dca46e0850c9f1d3b8944f4'
 replicate_key = 'abc'
 
-def click(url, AssemblyAi_token, replicate_key):
-
-    return ' '.join([url, AssemblyAi_token, replicate_key])
 
 with gr.Blocks() as demo:
     variables = {}
@@ -28,4 +25,7 @@ with gr.Blocks() as demo:
                     txt_box_transcription,
                     txt_box_video_generatr])
 
+demo.queue()
+
 demo.launch() 
+
